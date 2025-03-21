@@ -1,7 +1,7 @@
 import React from 'react';
 import { Twitter, Facebook, Linkedin, Instagram } from 'lucide-react';
 import { motion } from 'framer-motion';
-import MainImage from "../assets/main_image.png"
+import MainImage from "/images/main_image.png"
 
 const LandingPage = () => {
   const fadeIn = {
