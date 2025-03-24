@@ -154,7 +154,7 @@ const About = () => {
           style={{ backgroundColor: `${darkBlue}20`, color: darkBlue }}>
           TRUSTED BY INDUSTRY LEADERS
         </span>
-        <h1 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4 bg-clip-text" style={{ color: 'black' }}>Why Choose Us</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold mb-3 py-4 sm:mb-4 bg-clip-text" style={{ color: 'black' }}>Why Choose Us</h1>
         <motion.div 
           className="w-16 sm:w-24 h-1 mx-auto mt-3 sm:mt-4"
           initial={{ width: 0 }}

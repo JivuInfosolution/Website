@@ -29,10 +29,10 @@ const JobSearchPage = () => {
     {
       id: 1,
       title: 'Lead Generation Specialist - Microservices',
-      location: 'Madrid',
+      location: 'Lucknow',
       type: 'Fulltime',
-      company: 'DHL',
-      logo: 'https://via.placeholder.com/50/FFCC00/000000?text=DHL',
+      company: 'React',
+      logo: './public/reacts.png',
       postedDays: 1,
       category: 'Marketing',
       description: 'As a Lead Generation Specialist, you will be responsible for identifying and cultivating potential customers for our microservices solutions. You will work closely with the sales team to develop effective strategies for generating new business opportunities.',
@@ -43,8 +43,8 @@ const JobSearchPage = () => {
       title: 'Graphic Designer for Marketing',
       location: 'Boston',
       type: 'Remote',
-      company: 'Viber',
-      logo: 'https://via.placeholder.com/50/7360F2/FFFFFF?text=Viber',
+      company: 'React',
+      logo: './public/reacts.png',
       postedDays: 2,
       category: 'Design',
       description: 'We are looking for a talented Graphic Designer to create engaging and effective marketing materials. You will be working with our marketing team to design visual content for digital and print media.',
@@ -55,8 +55,8 @@ const JobSearchPage = () => {
       title: 'Head of Digital Marketing - New NDA Project',
       location: 'Washington',
       type: 'Remote',
-      company: 'Slack',
-      logo: 'https://via.placeholder.com/50/4A154B/FFFFFF?text=Slack',
+      company: 'React',
+      logo: './public/reacts.png',
       postedDays: 2,
       category: 'Marketing',
       description: 'As the Head of Digital Marketing, you will lead our digital marketing initiatives for a new confidential project. You will develop and implement comprehensive digital marketing strategies to drive growth and engagement.',
@@ -67,8 +67,8 @@ const JobSearchPage = () => {
       title: 'Frontend Developer',
       location: 'New York',
       type: 'Remote',
-      company: 'Spotify',
-      logo: 'https://via.placeholder.com/50/1DB954/FFFFFF?text=Spot',
+      company: 'React',
+      logo: './public/reacts.png',
       postedDays: 3,
       category: 'Development',
       description: 'We are seeking a skilled Frontend Developer to build and maintain user interfaces for our web applications. You will collaborate with designers and backend developers to create responsive and interactive web experiences.',
@@ -79,8 +79,8 @@ const JobSearchPage = () => {
       title: 'Customer Success Manager',
       location: 'London',
       type: 'Fulltime',
-      company: 'Amazon',
-      logo: 'https://via.placeholder.com/50/FF9900/FFFFFF?text=Amzn',
+      company: 'React',
+      logo: './public/reacts.png',
       postedDays: 1,
       category: 'Customer Support',
       description: 'As a Customer Success Manager, you will be responsible for building and maintaining relationships with key customers. You will ensure customer satisfaction, address concerns, and identify opportunities for growth.',
@@ -91,8 +91,8 @@ const JobSearchPage = () => {
       title: 'Sales Representative',
       location: 'Berlin',
       type: 'Fulltime',
-      company: 'Microsoft',
-      logo: 'https://via.placeholder.com/50/00A4EF/FFFFFF?text=MS',
+      company: 'React',
+      logo: './public/reacts.png',
       postedDays: 4,
       category: 'Sales',
       description: 'We are looking for an enthusiastic Sales Representative to promote our products and services. You will be responsible for reaching out to potential clients, understanding their needs, and ensuring a smooth sales process.',
@@ -103,8 +103,8 @@ const JobSearchPage = () => {
       title: 'Project Manager',
       location: 'Tokyo',
       type: 'Remote',
-      company: 'Google',
-      logo: 'https://via.placeholder.com/50/4285F4/FFFFFF?text=G',
+      company: 'React',
+      logo: './public/reacts.png',
       postedDays: 2,
       category: 'Management',
       description: 'As a Project Manager, you will plan, execute, and close projects on time and within budget. You will coordinate team members, manage resources, and ensure project goals are met.',
@@ -129,107 +129,94 @@ const JobSearchPage = () => {
     else if (!/\S+@\S+\.\S+/.test(formData.get('email'))) errors.email = 'Email is invalid';
     if (!formData.get('phone').trim()) errors.phone = 'Phone number is required';
     else if (!/^\d{10,}$/.test(formData.get('phone').replace(/[-()\s]/g, ''))) errors.phone = 'Valid phone number is required';
-    // if (!fileInputRef.current.files[0]) errors.resume = 'Resume is required';
+    if (!fileInputRef.current.files[0]) errors.resume = 'Resume is required';
     return errors;
   };
 
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setFormErrors({});
-    
-    if (!selectedJob) return;
-    
-    const formData = new FormData(formRef.current);
-    const errors = validateForm(formData);
-    
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      return;
-    }
-    
-    setIsSubmitting(true);
-    
-    // Compile all information into a comprehensive message
-    const fullName = formData.get('fullName').trim();
-    const email = formData.get('email').trim();
-    const phone = formData.get('phone').trim();
-    const coverLetter = formData.get('coverLetter').trim() || "No cover letter provided";
-    const resumeFileName = fileInputRef.current?.files[0]?.name || "No resume attached";
-    
-    // Create a formatted message with all the details
-    const formattedMessage = `
-JOB APPLICATION DETAILS:
------------------------
-Job Title: ${selectedJob.title}
-Company: ${selectedJob.company}
-Location: ${selectedJob.location}
-Job Type: ${selectedJob.type}
-Category: ${selectedJob.category}
+ 
 
-APPLICANT INFORMATION:
----------------------
-Name: ${fullName}
-Email: ${email}
-Phone: ${phone}
-Resume: ${resumeFileName}
+// New Changes for email
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setFormErrors({});
 
-COVER LETTER:
-------------
-${coverLetter}
-`;
+  if (!selectedJob) return;
 
-    // Create hidden input fields for EmailJS template
-    const nameInput = document.createElement('input');
-    nameInput.type = 'hidden';
-    nameInput.name = 'name';
-    nameInput.value = fullName;
-    formRef.current.appendChild(nameInput);
-    
-    const messageInput = document.createElement('input');
-    messageInput.type = 'hidden';
-    messageInput.name = 'message';
-    messageInput.value = formattedMessage;
-    formRef.current.appendChild(messageInput);
-    
-    // Current time for the time field
-    const timeInput = document.createElement('input');
-    timeInput.type = 'hidden';
-    timeInput.name = 'time';
-    timeInput.value = new Date().toLocaleString();
-    formRef.current.appendChild(timeInput);
+  const formData = new FormData(formRef.current);
+  const errors = validateForm(formData);
 
-    emailjs.sendForm(
-      'service_j2sx1qp',
-      'template_np5g3tk',
-      formRef.current,
-      '5UHR6bRTt6UjF-5di'
-    )
-    .then((result) => {
-      console.log('Email sent successfully:', result.text);
-      setIsSubmitting(false);
-      setSubmitSuccess(true);
-      
-      // Clean up the added hidden fields
-      formRef.current.removeChild(nameInput);
-      formRef.current.removeChild(messageInput);
-      formRef.current.removeChild(timeInput);
-      
-      setTimeout(() => {
-        setSelectedJob(null);
-        setSubmitSuccess(false);
-      }, 3000);
-    }, (error) => {
-      console.error('Failed to send email:', error.text);
-      setIsSubmitting(false);
-      alert('Failed to send application. Please try again.');
-      
-      // Clean up the added hidden fields
-      formRef.current.removeChild(nameInput);
-      formRef.current.removeChild(messageInput);
-      formRef.current.removeChild(timeInput);
+  if (Object.keys(errors).length > 0) {
+    setFormErrors(errors);
+    return;
+  }
+
+  setIsSubmitting(true);
+
+  const fullName = formData.get("fullName").trim();
+  const email = formData.get("email").trim();
+  const phone = formData.get("phone").trim();
+  const coverLetter = formData.get("coverLetter").trim() || "No cover letter provided";
+  const resumeFile = fileInputRef.current?.files[0];
+
+  if (!resumeFile) {
+    alert("Please upload your resume.");
+    setIsSubmitting(false);
+    return;
+  }
+
+  // Convert file to Base64
+  const convertFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.split(",")[1]); // Get Base64 without metadata
+      reader.onerror = (error) => reject(error);
     });
   };
+
+  try {
+    const base64File = await convertFileToBase64(resumeFile);
+
+    // Prepare EmailJS payload with correct attachment format
+    const emailData = {
+      job_title: selectedJob.title,
+      company_name: selectedJob.company,
+      location: selectedJob.location,
+      job_type: selectedJob.type,
+      job_category: selectedJob.category,
+      applicant_name: fullName,
+      from_email: email,
+      phone: phone,
+      cover_letter: coverLetter,
+      resume_name: resumeFile.name,
+      resume_file: base64File, // Corrected attachment
+      resume_file_type: resumeFile.type, // File type (e.g., application/pdf)
+    };
+
+    // Send email with EmailJS
+    emailjs.send("service_j2sx1qp", "template_xeda9xw", emailData, "5UHR6bRTt6UjF-5di")
+      .then((result) => {
+        console.log("Email sent successfully:", result.text);
+        setIsSubmitting(false);
+        setSubmitSuccess(true);
+
+        setTimeout(() => {
+          setSelectedJob(null);
+          setSubmitSuccess(false);
+        }, 3000);
+      })
+      .catch((error) => {
+        console.error("Failed to send email:", error.text);
+        setIsSubmitting(false);
+        alert("Failed to send application. Please try again.");
+      });
+
+  } catch (error) {
+    console.error("File conversion error:", error);
+    setIsSubmitting(false);
+    alert("Failed to process resume file. Please try again.");
+  }
+};
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 font-sans">
@@ -294,60 +281,6 @@ ${coverLetter}
           
         </div>
         
-        <AnimatePresence>
-          {showFilters && (
-            <motion.div 
-              className="mb-6 bg-white p-4 rounded-lg shadow-md"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <h3 className="text-lg font-medium mb-3 text-[#06224C]">Additional Filters</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                  <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#06224C] focus:border-[#06224C]">
-                    <option>Any Location</option>
-                    <option>Remote</option>
-                    <option>Hybrid</option>
-                    <option>On-site</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Job Type</label>
-                  <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#06224C] focus:border-[#06224C]">
-                    <option>Any Type</option>
-                    <option>Fulltime</option>
-                    <option>Part-time</option>
-                    <option>Contract</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Experience</label>
-                  <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#06224C] focus:border-[#06224C]">
-                    <option>Any Experience</option>
-                    <option>Entry Level</option>
-                    <option>Mid Level</option>
-                    <option>Senior</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Posted</label>
-                  <select className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#06224C] focus:border-[#06224C]">
-                    <option>Any Time</option>
-                    <option>Last 24 hours</option>
-                    <option>Last week</option>
-                    <option>Last month</option>
-                  </select>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
         
         <div className="flex overflow-x-auto space-x-8 border-b border-gray-200 mb-8 pb-1">
           {categories.map((category) => (
@@ -572,7 +505,7 @@ ${coverLetter}
                               name="resume"
                               ref={fileInputRef}
                               className="hidden"
-                              accept=".pdf,.doc,.docx"
+                              accept=".pdf,.doc,.docx,.jpg"
                               disabled={isSubmitting}
                               onChange={(e) => {
                                 const fileName = e.target.files[0]?.name;
