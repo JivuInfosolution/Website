@@ -53,7 +53,7 @@ function TeamPages() {
               </div>
         </div>
         <div className='mt-[20%] py-8'>
-            <TeamPage/>
+            <TeamPage/> 
         </div>
 
     </>
