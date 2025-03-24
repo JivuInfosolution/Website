@@ -280,7 +280,7 @@ ${coverLetter}
                 <h2 className='mt-16 text-2xl'>Carrers</h2>
               </div>
       </div>
-      <div className="max-w-6xl mx-auto mt-60">
+      <div className="max-w-6xl mx-auto mt-[20%]">
         <div className="flex justify-between items-center mb-6">
           <div>
             <h1 className="text-4xl font-bold text-gray-800">

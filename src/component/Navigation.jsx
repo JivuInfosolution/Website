@@ -53,15 +53,15 @@ const Navigation = () => {
             }`}>
               Menu <ChevronDown size={16} className="ml-1" />
             </button>
-            <div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md py-2 hidden group-hover:block">
+            <div className="absolute left-0 w-48 bg-white shadow-lg rounded-md py-2 hidden group-hover:block">
               <Link to="/about" className="block px-4 py-2 text-[#051c40] hover:bg-gray-100 hover:text-[#ffc451]">About Us</Link>
               <a href="#contact" className="block px-4 py-2 text-[#051c40] hover:bg-gray-100 hover:text-[#ffc451]">Contact</a>
               <Link to="/careers" className="block px-4 py-2 text-[#051c40] hover:bg-gray-100 hover:text-[#ffc451]">Careers</Link>
             </div>
           </div>
-          <a href="#news" className={`hover:text-[#ffc451] transition-colors duration-300 ${
+          <Link to="/blog" className={`hover:text-[#ffc451] transition-colors duration-300 ${
             scrolled ? 'text-[#051c40]' : 'text-white'
-          }`}>News</a>
+          }`}>Blog</Link>
         </nav>
         
         
