@@ -12,7 +12,7 @@ const LandingPage = () => {
   return (
     <section id="home" className="min-h-screen relative overflow-hidden">
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#051c40] to-[#072a5e]">
-        <div className="absolute w-full h-full border-2 border-red-500">
+        <div className="absolute w-full h-full ">
           {Array.from({ length: 20 }).map((_, index) => (
             <motion.div
               key={index}
