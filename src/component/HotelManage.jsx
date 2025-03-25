@@ -105,7 +105,7 @@ const HotelManage = () => {
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#ffc451] opacity-20 rounded-full -z-10"></div>
               <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#ffc451] opacity-20 rounded-full -z-10"></div>
               <motion.img 
-                src="./src/assets/Web-Development-image.png" 
+                src="./webimg.jpg" 
                 alt="Web Development" 
                 className="w-full h-auto max-h-full md:h-96 object-contain" 
                 whileHover={{ 

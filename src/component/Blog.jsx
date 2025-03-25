@@ -11,7 +11,7 @@ const blogPosts = [
     author: "Sarah Johnson",
     date: "March 15, 2025",
     readTime: "5 min read",
-    image: "/api/placeholder/600/400",
+    image: "./blogimg.jpg",
     tags: ["AI", "Infrastructure", "IT Management"]
   },
   {
@@ -22,7 +22,7 @@ const blogPosts = [
     author: "Michael Chen",
     date: "March 10, 2025",
     readTime: "7 min read",
-    image: "/api/placeholder/600/400",
+    image: "./blogimg.jpg",
     tags: ["Cloud", "Future Tech", "Serverless"]
   },
   {
@@ -33,7 +33,7 @@ const blogPosts = [
     author: "Alex Rivera",
     date: "March 5, 2025",
     readTime: "6 min read",
-    image: "/api/placeholder/600/400",
+    image: "./blogimg.jpg",
     tags: ["Cybersecurity", "Remote Work", "Data Protection"]
   },
   {
@@ -44,7 +44,7 @@ const blogPosts = [
     author: "Jessica Wu",
     date: "February 28, 2025",
     readTime: "8 min read",
-    image: "/api/placeholder/600/400",
+    image: "./blogimg.jpg",
     tags: ["ERP", "Business Operations", "Digital Transformation"]
   },
   {
@@ -55,7 +55,7 @@ const blogPosts = [
     author: "David Park",
     date: "February 20, 2025",
     readTime: "6 min read",
-    image: "/api/placeholder/600/400",
+    image: "./blogimg.jpg",
     tags: ["PWA", "Web Development", "Mobile"]
   },
   {
@@ -66,7 +66,7 @@ const blogPosts = [
     author: "Lisa Thompson",
     date: "February 15, 2025",
     readTime: "9 min read",
-    image: "/api/placeholder/600/400",
+    image: "./blogimg.jpg",
     tags: ["Zero Trust", "Security", "Cybersecurity"]
   },
   {
@@ -77,7 +77,7 @@ const blogPosts = [
     author: "Robert Chang",
     date: "February 8, 2025",
     readTime: "10 min read",
-    image: "/api/placeholder/600/400",
+    image: "./blogimg.jpg",
     tags: ["Quantum Computing", "Innovation", "Future Tech"]
   },
   {
@@ -88,7 +88,7 @@ const blogPosts = [
     author: "Emma Rodriguez",
     date: "February 1, 2025",
     readTime: "7 min read",
-    image: "/api/placeholder/600/400",
+    image: "./blogimg.jpg",
     tags: ["Mobile Development", "Cross-Platform", "React Native"]
   }
 ];

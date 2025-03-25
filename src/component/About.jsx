@@ -395,7 +395,7 @@ const About = () => {
               whileHover={{ scale: 1.05 }}
               style={{ borderColor: darkBlue }}
             >
-              <img src="/images" alt="Client" className="w-full h-full object-cover" />
+              <img src="./public/images/man.jpg" alt="Client" className="w-full h-full object-cover" />
             </motion.div>
           </div>
           <div className="text-center sm:text-left">
