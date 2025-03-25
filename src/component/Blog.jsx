@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
 
 // Blog post data - you would fetch this from an API in a real application
 const blogPosts = [
@@ -96,7 +96,131 @@ const blogPosts = [
 // Category filter options
 const categories = ["All", "Artificial Intelligence", "Cloud Computing", "Cybersecurity", "ERP Solutions", "Web Development", "Mobile Apps"];
 
-const BlogCard = ({ post, index }) => {
+// Popup component for showing full blog post
+const BlogPostPopup = ({ post, isOpen, onClose }) => {
+  // Close popup when Escape key is pressed
+  useEffect(() => {
+    const handleEscKey = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    
+    window.addEventListener('keydown', handleEscKey);
+    
+    // Prevent body scroll when popup is open
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
+    
+    return () => {
+      window.removeEventListener('keydown', handleEscKey);
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen, onClose]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div 
+        className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md bg-opacity-30"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+        >
+          <motion.div 
+            className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto bg-white rounded-xl shadow-2xl"
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            exit={{ scale: 0.9, y: 20 }}
+            transition={{ type: "spring", damping: 25 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button 
+              className="absolute top-4 right-4 z-10 bg-white rounded-full p-2 shadow-md hover:bg-gray-100"
+              onClick={onClose}
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                className="h-6 w-6 text-gray-500" 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2} 
+                  d="M6 18L18 6M6 6l12 12" 
+                />
+              </svg>
+            </button>
+            
+            {/* Blog post content */}
+            <div className="flex flex-col md:flex-row">
+              <div className="md:w-1/2">
+                <img 
+                  src={post.image} 
+                  alt={post.title} 
+                  className="w-full h-64 md:h-full object-cover"
+                />
+              </div>
+              
+              <div className="md:w-1/2 p-6 md:p-8 flex flex-col">
+                <div className="bg-[#ffc451] text-[#06224C] text-xs font-bold px-3 py-1 rounded-full self-start mb-3">
+                  {post.category}
+                </div>
+                
+                <h2 className="text-2xl md:text-3xl font-bold text-[#06224C] mb-4">
+                  {post.title}
+                </h2>
+                
+                <div className="flex justify-between items-center text-gray-500 text-sm mb-4">
+                  <span>{post.date}</span>
+                  <span>{post.readTime}</span>
+                </div>
+                
+                <div className="mb-4">
+                  <p className="text-gray-600 mb-4">
+                    {post.excerpt}
+                  </p>
+                  <p className="text-gray-600 mb-4">
+                    This is the full content of the blog post that would normally be fetched from an API. The content preserves all the styling and information from the original card.
+                  </p>
+                  <p className="text-gray-600">
+                    The post covers important aspects of {post.category} and provides valuable insights for professionals in the tech industry.
+                  </p>
+                </div>
+                
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {post.tags.map((tag, i) => (
+                    <span key={i} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+                
+                <div className="mt-auto flex items-center">
+                  <div className="w-10 h-10 bg-[#06224C] rounded-full mr-3 flex items-center justify-center text-white font-medium">
+                    {post.author.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-medium text-[#06224C]">{post.author}</p>
+                    <p className="text-sm text-gray-500">Author</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+const BlogCard = ({ post, index, onReadMore }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -171,6 +295,7 @@ const BlogCard = ({ post, index }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="text-[#ffc451] font-medium flex items-center"
+            onClick={() => onReadMore(post)}
           >
             Read More
             <svg 
@@ -200,6 +325,17 @@ const BlogSection = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [showAllPosts, setShowAllPosts] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  
+  const handleReadMore = (post) => {
+    setSelectedPost(post);
+    setIsPopupOpen(true);
+  };
+  
+  const closePopup = () => {
+    setIsPopupOpen(false);
+  };
   
   // Filter posts based on category, search term, and whether to show all posts
   useEffect(() => {
@@ -349,7 +485,12 @@ const BlogSection = () => {
         {filteredPosts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {filteredPosts.map((post, index) => (
-              <BlogCard key={post.id} post={post} index={index} />
+              <BlogCard 
+                key={post.id} 
+                post={post} 
+                index={index} 
+                onReadMore={handleReadMore}
+              />
             ))}
           </div>
         ) : (
@@ -465,8 +606,8 @@ const BlogSection = () => {
             
             <div className="mt-6 sm:mt-8 flex flex-col md:flex-row items-center justify-between bg-[#06224C] bg-opacity-5 p-4 sm:p-6 rounded-lg border border-[#06224C] border-opacity-10">
               <div className="md:w-2/3 mb-4 md:mb-0 text-center md:text-left">
-                <h4 className="text-base sm:text-lg font-semibold mb-2 text-[#06224C]">Want to contribute?</h4>
-                <p className="text-gray-700 text-sm sm:text-base">Share your tech expertise with our readers. We're always looking for industry experts to write insightful articles.</p>
+                <h4 className="text-base sm:text-lg font-semibold mb-2 text-white">Want to contribute?</h4>
+                <p className="text-white text-sm sm:text-base">Share your tech expertise with our readers. We're always looking for industry experts to write insightful articles.</p>
               </div>
               <motion.button
                 className="px-4 sm:px-5 py-2 bg-[#ffc451] text-[#06224C] rounded-lg font-medium flex items-center hover:bg-[#ffc451] hover:bg-opacity-90"
@@ -493,6 +634,15 @@ const BlogSection = () => {
           </div>
         </motion.div>
       </div>
+      
+      {/* Blog post popup */}
+      {selectedPost && (
+        <BlogPostPopup 
+          post={selectedPost} 
+          isOpen={isPopupOpen} 
+          onClose={closePopup}
+        />
+      )}
     </div>
   );
 };
