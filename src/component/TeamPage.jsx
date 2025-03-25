@@ -91,7 +91,7 @@ const TeamPage = () => {
             transition={{ duration: 0.6 }}
             className="text-4xl font-bold text-black-500 mb-2"
           >
-            Team
+            Teams
           </motion.h1>
           <motion.div 
             initial={{ width: 0 }}
