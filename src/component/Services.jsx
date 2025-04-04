@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import {Link} from "react-router-dom"
 
 
 const WebDevelopmentIcon = () => (
@@ -84,8 +85,9 @@ const DigitalMarketingIcon = () => (
   </svg>
 );
 
-const ServiceCard = ({ icon, title, description, index }) => {
+const ServiceCard = ({ icon, title, description, index, path }) => {
   const [isHovered, setIsHovered] = useState(false);
+  console.log("Path : ", path)
 
   return (
     <motion.div
@@ -140,6 +142,7 @@ const ServiceCard = ({ icon, title, description, index }) => {
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: 0.2 }}
         >
+          <Link to={path}>
           <motion.button
             className="text-[#ffc451] font-medium flex items-center hover:font-semibold"
             whileHover={{ scale: 1.05 }}
@@ -161,6 +164,7 @@ const ServiceCard = ({ icon, title, description, index }) => {
               />
             </svg>
           </motion.button>
+          </Link>
         </motion.div>
       </div>
     </motion.div>
@@ -174,32 +178,38 @@ const ServicesSection = () => {
     {
       icon: <WebDevelopmentIcon />,
       title: "Web Development",
-      description: "Custom, responsive websites and web applications tailored to meet your business needs and enhance your online presence."
+      description: "Custom, responsive websites and web applications tailored to meet your business needs and enhance your online presence.",
+      path:"/WebServices"
     },
     {
       icon: <MobileApplicationIcon />,
       title: "Mobile Application",
-      description: "Native and cross-platform mobile solutions that deliver exceptional user experiences across all devices."
+      description: "Native and cross-platform mobile solutions that deliver exceptional user experiences across all devices.",
+      path:"/MobileDevelop"
     },
     {
       icon: <SchoolERPIcon />,
       title: "School/College ERP",
-      description: "Comprehensive management systems for educational institutions to streamline administration, academics, and communication."
+      description: "Comprehensive management systems for educational institutions to streamline administration, academics, and communication.",
+      path:"/SchoolErp"
     },
     {
       icon: <RestaurantERPIcon />,
       title: "Restaurant ERP",
-      description: "Integrated solutions for restaurant management, including inventory, orders, billing, and customer relationship management."
+      description: "Integrated solutions for restaurant management, including inventory, orders, billing, and customer relationship management.",
+      path:"/Restaurant"
     },
     {
       icon: <ConstructionERPIcon />,
       title: "Construction ERP",
-      description: "Project management tools for construction businesses to track resources, manage budgets, and monitor progress efficiently."
+      description: "Project management tools for construction businesses to track resources, manage budgets, and monitor progress efficiently.",
+      path:"/ConstructionPage"
     },
     {
       icon: <HotelManagementIcon />,
       title: "Hotel Management",
-      description: "End-to-end solutions for hotel operations, including reservations, housekeeping, staff management, and guest services."
+      description: "End-to-end solutions for hotel operations, including reservations, housekeeping, staff management, and guest services.",
+      path:"/HotelManagePage"
     }
   ];
   
@@ -207,12 +217,22 @@ const ServicesSection = () => {
     {
       icon: <HospitalManagementIcon />,
       title: "Hospital Management",
-      description: "Comprehensive healthcare management systems for patient records, appointments, billing, inventory, and staff scheduling."
+      description: "Comprehensive healthcare management systems for patient records, appointments, billing, inventory, and staff scheduling.",
+      path:"/HospitalPage"
     },
     {
       icon: <DigitalMarketingIcon />,
       title: "Digital Marketing",
-      description: "Strategic marketing solutions to boost your online presence, including SEO, social media, content marketing, and PPC advertising."
+      description: "Strategic marketing solutions to boost your online presence, including SEO, social media, content marketing, and PPC advertising.",
+      path:"/DigitalMarketingPage"
+      
+    },
+    {
+      icon: <DigitalMarketingIcon />,
+      title: "E-Commerce",
+      description: "Strategic marketing solutions to boost your online presence, including SEO, social media, content marketing, and PPC advertising.",
+      path:"/EcommercePage"
+      
     }
   ];
 
@@ -294,6 +314,7 @@ const ServicesSection = () => {
               title={service.title}
               description={service.description}
               index={index}
+              path={service.path}
             />
           ))}
           
@@ -306,6 +327,8 @@ const ServicesSection = () => {
                 title={service.title}
                 description={service.description}
                 index={services.length + index}
+                path={service.path}
+
               />
             ))}
           </AnimatePresence>
